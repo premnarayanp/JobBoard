@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
-export default JobCard = ({ item }) => (
+export default JobCard = ({ item, navigation }) => (
     <TouchableOpacity
         onPress={() => navigation.navigate('JobDetailScreen', { job: item })}
         style={styles.jobCard}>

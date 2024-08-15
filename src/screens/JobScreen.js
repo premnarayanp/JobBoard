@@ -32,7 +32,7 @@ export default function JobScreen({ navigation }) {
             {!loading && !error && (
                 <FlatList
                     data={jobs}
-                    renderItem={JobCard}
+                    renderItem={({ item }) => <JobCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id + item.type}
                     onEndReached={() => setPage(page + 1)}
                     onEndReachedThreshold={0.5}
