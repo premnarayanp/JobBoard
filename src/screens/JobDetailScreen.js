@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Alert } from 'react-native';
+import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function JobDetailScreen({ route, navigation }) {
@@ -10,7 +10,6 @@ export default function JobDetailScreen({ route, navigation }) {
         checkIfBookmarked();
     }, []);
 
-    // Function to check if the job is already bookmarked
     const checkIfBookmarked = async () => {
         try {
             let bookmarks = await AsyncStorage.getItem('bookmarks');
@@ -22,18 +21,15 @@ export default function JobDetailScreen({ route, navigation }) {
         }
     };
 
-    // Function to toggle the bookmark status
     const toggleBookmark = async () => {
         try {
             let bookmarks = await AsyncStorage.getItem('bookmarks');
             bookmarks = bookmarks ? JSON.parse(bookmarks) : [];
 
             if (isBookmarked) {
-                // Remove the bookmark if it exists
                 bookmarks = bookmarks.filter(bookmarkedJob => bookmarkedJob.id !== job.id);
                 Alert.alert('Bookmark removed!');
             } else {
-                // Add the bookmark if it doesn't exist
                 bookmarks.push(job);
                 Alert.alert('Job bookmarked!');
             }
@@ -46,11 +42,11 @@ export default function JobDetailScreen({ route, navigation }) {
     };
 
     return (
-        <View style={{ padding: 10 }}>
-            <Text style={{ fontSize: 18 }}>Title: {job.title}</Text>
-            <Text>Place: {job.primary_details ? job.primary_details.Place : "Not mentioned"}</Text>
-            <Text>Salary: {job.primary_details ? job.primary_details.Salary : "Not mentioned"}</Text>
-            <Text>Phone Number: {job.whatsapp_no}</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Title: {job.title}</Text>
+            <Text style={styles.text}>Place: {job.primary_details ? job.primary_details.Place : "Not mentioned"}</Text>
+            <Text style={styles.text}>Salary: {job.primary_details ? job.primary_details.Salary : "Not mentioned"}</Text>
+            <Text style={styles.text}>Phone Number: {job.whatsapp_no}</Text>
             <Button
                 title={isBookmarked ? "Remove Bookmark" : "Bookmark Job"}
                 onPress={toggleBookmark}
@@ -58,3 +54,34 @@ export default function JobDetailScreen({ route, navigation }) {
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+        margin: 20,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4.65,
+        elevation: 8,
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 12,
+        color: '#333',
+        borderBottomWidth: 2,
+        borderBottomColor: '#4CAF50', // Green color for the bottom margin
+        paddingBottom: 4,
+    },
+    text: {
+        fontSize: 18,
+        marginBottom: 10,
+        color: '#555',
+        borderBottomWidth: 2,
+        borderBottomColor: '#4CAF50', // Green color for the bottom margin
+        paddingBottom: 4,
+    },
+});
