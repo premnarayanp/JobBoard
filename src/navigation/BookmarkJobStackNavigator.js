@@ -5,8 +5,8 @@ const Stack = createNativeStackNavigator();
 export default function BookmarkJobStackNavigator() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Bookmark" component={BookmarkJobScreen} />
-            <Stack.Screen name="BookmarkDetail" component={JobDetailScreen} />
+            <Stack.Screen name="BookmarkJobScreen" component={BookmarkJobScreen} />
+            <Stack.Screen name="JobDetailScreen" component={JobDetailScreen} />
         </Stack.Navigator>
     );
 }
